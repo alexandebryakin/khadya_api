@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  postgres:
+    container_name: khadya-api-postgres
+  redis:
+    container_name: khadya-api-redis
+  app:
+    build:
+      dockerfile: ./docker/production/Dockerfile
+    env_file: ./.production.env
+    restart: always
+    container_name: khadya-api-production
+    expose:
+      - 80
+    environment:
+      - VIRTUAL_HOST=api.khadya.ru
+      - VIRTUAL_PORT=80
+      - LETSENCRYPT_HOST=api.khadya.ru
+      - LETSENCRYPT_EMAIL=digitoider@gmail.com
+
+networks:
+  default:
+    external:
+      name: nginx-proxy
+# [RUN:]
+# docker-compose -f ./docker-compose.yml -f ./docker/production/docker-compose.yml build
+# docker-compose -f ./docker-compose.yml -f ./docker/production/docker-compose.yml up -d
+# docker-compose -f ./docker-compose.yml -f ./docker/production/docker-compose.yml down

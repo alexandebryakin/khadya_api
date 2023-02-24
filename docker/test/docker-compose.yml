@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/development/Dockerfile
+    env_file: ./.env.test
+    environment:
+      - RAILS_ENV=test
+    volumes:
+      - gems:/usr/local/bundle
+
+volumes:
+  gems:
+# [RUN:]
+# docker-compose -f ./docker-compose.yml -f ./docker/test/docker-compose.yml run -e RAILS_ENV=test --rm app rspec

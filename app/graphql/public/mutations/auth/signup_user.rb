@@ -1,0 +1,42 @@
+# frozen_string_literal: true
+
+module Public
+  module Mutations
+    module Auth
+      class SignupUser < BaseMutation
+        argument :email, String, required: true
+        argument :password, String, required: true
+
+        field :token, String, null: true
+        field :user, Private::Types::UserType, null: true
+        field :errors, GraphQL::Types::JSON
+
+        def resolve(email:, password:)
+          user = User.create(password:, emails_attributes: [{ email:, is_primary: true }])
+
+          if user.valid?
+            { user:, token: token(user), errors: {} }
+          else
+            { user: nil, token: nil, errors: transform_error_messages(user.errors.messages) }
+          end
+        end
+
+        private
+
+        def token(user)
+          ::Auth::JwtEncode.new.call(
+            data: {
+              user: {
+                id: user.id
+              }
+            }
+          )
+        end
+
+        def transform_error_messages(messages)
+          messages.transform_keys { _1.to_s == 'emails.email' ? 'email' : _1 }
+        end
+      end
+    end
+  end
+end
