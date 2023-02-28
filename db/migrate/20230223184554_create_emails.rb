@@ -6,7 +6,7 @@ class CreateEmails < ActiveRecord::Migration[7.0]
 
     create_table :emails, id: :uuid do |t|
       t.citext :email
-      t.integer :verification_status, default: 0, null: false
+      t.string :verification_status, default: 'in_progress', null: false
       t.boolean :is_primary, default: false, null: false
 
       t.references :user, type: :uuid
