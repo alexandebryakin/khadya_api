@@ -7,8 +7,9 @@ class CreateUsers < ActiveRecord::Migration[7.0]
 
       t.string :first_name
       t.string :last_name
-      t.string :language_code, default: 'en-us', null: false # https://www.andiamo.co.uk/resources/iso-language-codes/
+      t.string :language_code, default: 'en-US', null: false # https://www.andiamo.co.uk/resources/iso-language-codes/
       t.string :kind, default: 'anonymous', null: false
+      t.datetime :last_visited_at, default: -> { 'CURRENT_TIMESTAMP' }, null: false
 
       t.timestamps
 

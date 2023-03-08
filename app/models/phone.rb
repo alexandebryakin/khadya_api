@@ -1,13 +1,11 @@
 # frozen_string_literal: true
 
 class Phone < ApplicationRecord
-  VERIFICATION_STATUSES = {
+  enum :verification_status, {
     in_progress: 'in_progress',
     succeeded: 'succeeded',
     failed: 'failed'
-  }.freeze
-
-  enum :verification_status, VERIFICATION_STATUSES, _default: 'in_progress'
+  }, default: 'in_progress', prefix: true
 
   belongs_to :user
 

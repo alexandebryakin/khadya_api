@@ -14,4 +14,4 @@ services:
 volumes:
   gems:
 # [RUN:]
-# docker-compose -f ./docker-compose.yml -f ./docker/test/docker-compose.yml run -e RAILS_ENV=test --rm app rspec
+# docker-compose -f ./docker-compose.yml -f ./docker/test/docker-compose.yml run --rm app rspec

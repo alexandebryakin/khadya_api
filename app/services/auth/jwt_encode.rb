@@ -11,7 +11,7 @@ module Auth
     private
 
     def expires_at
-      Time.current + 4.hours
+      Time.current + 30.days
     end
 
     def hmac_secret

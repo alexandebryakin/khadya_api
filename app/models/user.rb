@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  ANONYMOUS_USER_PASSWORD = '1234'
+
   has_secure_password
 
-  KINDS = {
+  enum :kind, {
     anonymous: 'anonymous',
     real: 'real'
-  }.freeze
-
-  enum :kind, KINDS, _default: 'anonymous'
+  }, default: 'anonymous', prefix: true
 
   has_many :phones, dependent: :destroy
   has_many :emails, dependent: :destroy

@@ -6,8 +6,7 @@ class Order < ApplicationRecord
   belongs_to :check
   has_many :order_items, dependent: :destroy
 
-
-  STATUSES = {
+  enum :status, {
     initial: 'initial',
     in_progress: 'in_progress',
     ordered: 'ordered',
@@ -16,7 +15,5 @@ class Order < ApplicationRecord
     extending: 'extending',
     waiting_paycheck: 'waiting_paycheck',
     payed: 'payed'
-  }.freeze
-
-  enum :statuses, STATUSES, _default: 'initial'
+  }, default: 'initial', prefix: true
 end

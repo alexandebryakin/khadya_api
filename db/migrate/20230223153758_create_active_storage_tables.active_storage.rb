@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # This migration comes from active_storage (originally 20170806125915)
-class CreateActiveStorageTables < ActiveRecord::Migration[5.2]
+class CreateActiveStorageTables < ActiveRecord::Migration[7.0]
   def change # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     create_table :active_storage_blobs, id: :uuid do |t|
       t.string   :key,          null: false

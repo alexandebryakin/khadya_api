@@ -10,7 +10,8 @@ gem 'apollo_upload_server', '~> 2.1.4'
 gem 'graphql', '~> 2.0.13'
 gem 'pg', '~> 1.4.3'
 gem 'puma', '~> 5.0'
-gem 'rails', '~> 7.0.3', '>= 7.0.3.1'
+gem 'rails', '~> 7.0.4.2'
+gem 'dry-initializer', '~> 3.1', '>= 3.1.1'
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
