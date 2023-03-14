@@ -9,12 +9,13 @@ module Mutations
       argument :number, String, required: true
 
       def resolve(code:, number:)
-        phone = current_user.phones.find_or_create_by!(code:, number:)
+        # TODO: validate phone
+        phone = Phone.find_or_initialize_by(code:, number:)
+        phone.update!(user: current_user) if phone.new_record?
 
         return otp_already_sent_failure if OneTimePasswords::IsAlreadySent.new(phone:).call
 
-        # TODO: validate phone
-        OneTimePasswords::Send.new.call(phone:)
+        OneTimePasswords::Send.new(phone:).call
 
         success
       end

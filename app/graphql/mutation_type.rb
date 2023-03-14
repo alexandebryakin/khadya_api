@@ -4,6 +4,7 @@ class MutationType < ::Types::BaseObject
   field :signup_user, mutation: Mutations::Auth::SignupUser
   field :signin_user, mutation: Mutations::Auth::SigninUser
   field :send_one_time_password, mutation: Mutations::Auth::SendOneTimePassword
+  field :verify_one_time_password, mutation: Mutations::Auth::VerifyOneTimePassword
 
   field :change_current_user_password, mutation: Mutations::Users::ChangeCurrentUserPassword
 

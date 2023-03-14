@@ -9,24 +9,34 @@ module Mutations
       argument :code, String, required: true
       argument :number, String, required: true
 
+      class Errors < ::Types::BaseObject
+        field :one_time_password, [String], null: true
+      end
+
+      field :errors, Errors, null: false
       field :user, Types::Custom::UserType, null: false
 
       def resolve(one_time_password:, code:, number:)
-        phone = current_user.phones.find_by(code:, number:)
+        phone = Phone.find_by(code:, number:)
+        user = phone.user
 
-        return otp_invalid_failure if invalid_otp?(phone:, one_time_password:)
+        return otp_invalid_failure(user:) if invalid_otp?(phone:, one_time_password:)
 
-        Users::ConvertAnonymousToReal.new(user: current_user).call
+        phone.update!(verification_status: 'succeeded', is_primary: true)
+        ::Users::ConvertAnonymousToReal.new(user:).call
 
-        success(user: current_user.reload)
+        success(user: user.reload)
       end
 
       private
 
-      def otp_invalid_failure
-        failure(errors: {
-          one_time_password: [ERROR_OTP_INVALID]
-        })
+      def otp_invalid_failure(user:)
+        failure(
+          user:,
+          errors: {
+            one_time_password: [ERROR_OTP_INVALID]
+          }
+        )
       end
 
       def invalid_otp?(phone:, one_time_password:)
