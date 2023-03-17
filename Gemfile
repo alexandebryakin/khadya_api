@@ -7,11 +7,11 @@ ruby '3.1.2'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem 'apollo_upload_server', '~> 2.1.4'
+gem 'dry-initializer', '~> 3.1', '>= 3.1.1'
 gem 'graphql', '~> 2.0.13'
 gem 'pg', '~> 1.4.3'
 gem 'puma', '~> 5.0'
 gem 'rails', '~> 7.0.4.2'
-gem 'dry-initializer', '~> 3.1', '>= 3.1.1'
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"

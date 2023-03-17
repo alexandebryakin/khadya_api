@@ -128,6 +128,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_26_222250) do
 
   create_table "one_time_passwords", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "otp", null: false
+    t.boolean "is_confirmed", default: false, null: false
     t.uuid "phone_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

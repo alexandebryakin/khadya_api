@@ -8,15 +8,24 @@ module OneTimePasswords
     option :one_time_password
 
     def call
-      return one_time_password != '123456' if Rails.env.development?
+      one_time_password_record.update!(is_confirmed: true) if otp_matches?
 
-      one_time_password&.otp == one_time_password
+      otp_matches?
     end
 
     private
 
-    def one_time_password
-      @one_time_password ||= OneTimePassword.find_by(phone:, created_at: IsAlreadySent::TIME_LIMIT.ago..)
+    def one_time_password_record
+      @one_time_password_record ||= OneTimePassword.find_by(
+        phone:,
+        created_at: IsAlreadySent::TIME_LIMIT.ago..,
+        is_confirmed: false,
+        otp: one_time_password
+      )
+    end
+
+    def otp_matches?
+      one_time_password_record.present?
     end
   end
 end

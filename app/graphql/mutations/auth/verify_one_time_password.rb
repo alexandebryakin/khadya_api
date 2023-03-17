@@ -15,6 +15,7 @@ module Mutations
 
       field :errors, Errors, null: false
       field :user, Types::Custom::UserType, null: false
+      field :token, String, null: false
 
       def resolve(one_time_password:, code:, number:)
         phone = Phone.find_by(code:, number:)
@@ -25,7 +26,7 @@ module Mutations
         phone.update!(verification_status: 'succeeded', is_primary: true)
         ::Users::ConvertAnonymousToReal.new(user:).call
 
-        success(user: user.reload)
+        success(user: user.reload, token: ::Auth::GenerateJwt.new(user:).call)
       end
 
       private
@@ -33,6 +34,7 @@ module Mutations
       def otp_invalid_failure(user:)
         failure(
           user:,
+          token: context[:current_token],
           errors: {
             one_time_password: [ERROR_OTP_INVALID]
           }
