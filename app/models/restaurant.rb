@@ -6,4 +6,6 @@ class Restaurant < ApplicationRecord
   has_many :tables, dependent: :destroy
   has_many :restaurants_employees, dependent: :destroy
   has_many :employees, through: :restaurants_employees
+
+  has_many_attached :images
 end

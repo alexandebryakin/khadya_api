@@ -12,6 +12,9 @@ class MutationType < ::Types::BaseObject
   field :change_current_user_password, mutation: Mutations::Users::ChangeCurrentUserPassword
 
   field :create_phone, mutation: Mutations::Phones::CreatePhone
-
   field :create_email, mutation: Mutations::Emails::CreateEmail
+
+  field :create_restaurant, mutation: Mutations::Restaurants::CreateRestaurant
+  field :add_restaurant_attachment, mutation: Mutations::Restaurants::AddRestaurantAttachment
+  field :remove_restaurant_attachment, mutation: Mutations::Restaurants::RemoveRestaurantAttachment
 end

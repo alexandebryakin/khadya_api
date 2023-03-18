@@ -18,6 +18,8 @@ class User < ApplicationRecord
   has_many :directly_assigned_permissions, through: :users_directly_assigned_permissions
   has_many :users_forbidden_ingredients, dependent: :destroy
   has_many :forbidden_ingredients, through: :users_forbidden_ingredients
+  has_one :network, dependent: :destroy
+  has_many :restaurants, through: :network
 
   accepts_nested_attributes_for :emails
 

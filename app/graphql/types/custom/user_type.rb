@@ -20,6 +20,8 @@ module Types
       field :kind, UserKindEnum, null: false
       field :phones, [Types::Custom::PhoneType], null: false
       field :emails, [Types::Custom::EmailType], null: false
+      field :network, Types::Custom::NetworkType, null: true
+      field :restaurants, [Types::Custom::RestaurantType], null: false
     end
   end
 end
